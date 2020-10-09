@@ -10,13 +10,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist kaikaige/yii2-layui "*"
-```
-
-or add
-
-```
-"kaikaige/yii2-layui": "*"
+composer require kaikaige/yii2-layui:"<version_number>"
 ```
 
 to the require section of your `composer.json` file.
@@ -26,6 +20,3 @@ Usage
 -----
 
 Once the extension is installed, simply use it in your code by  :
-
-```php
-<?= \kaikaige\layui\AutoloadExample::widget(); ?>```
