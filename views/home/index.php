@@ -91,8 +91,6 @@ $baseUrl = $asset->baseUrl;
 
     <!-- 主体部分 -->
     <div class="layui-body"></div>
-    <!-- 底部 -->
-<!--    <div class="layui-footer">Copyright © 20192 EasyWeb All rights reserved.</div>-->
 </div>
 <!-- 加载动画 -->
 <?php

@@ -88,7 +88,6 @@ $baseUrl = $asset->baseUrl;
 
     });
 </script>
-<!-- 底部 -->
 </body>
 <?php $this->endBody() ?>
 </html>
