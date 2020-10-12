@@ -23,6 +23,8 @@ class Configs extends \mdm\admin\BaseObject
 
     public $mdmModuleName = 'admin';
 
+    public $userTable = 'admin';
+
     private static $_instance;
 
     /**

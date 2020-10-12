@@ -39,7 +39,7 @@ class HomeController extends Controller
         $model = new LoginForm();
         if (Yii::$app->request->isAjax) {
             if (!$model->load(Yii::$app->request->post()) || !$model->login()) {
-                return $this->asJson(['code'=>400, 'message'=>f_model_error($model)]);
+                return $this->asJson(['code'=>400, 'message'=>$this->modelError($model)]);
             } else {
                 return $this->asJson(['code'=>200, 'message'=>'登录成功']);
             }
@@ -79,5 +79,17 @@ class HomeController extends Controller
     {
         Yii::$app->user->logout();
         return $this->goHome();
+    }
+
+    private function modelError($model) {
+        $errors = $model->getErrors();		//得到所有的错误信息
+        if(!is_array($errors)){
+            return true;
+        }
+        $firstError = array_shift($errors);
+        if(!is_array($firstError)) {
+            return true;
+        }
+        return array_shift($firstError);
     }
 }

@@ -43,9 +43,9 @@ class m140602_111327_create_menu_table extends \yii\db\Migration
             [30, '模块管理', 3, '/'.$moduleName.'/auth-menu/system'],
             [31, '菜单管理', 3, '/'.$moduleName.'/auth-menu'],
             [32, '用户授权', 3, '/'.$mdmModuleName.'/assignment'],
-            [32, '权限列表', 3, '/'.$mdmModuleName.'/permission'],
-            [32, '角色列表', 3, '/'.$mdmModuleName.'/role'],
-            [32, '路由列表', 3, '/'.$mdmModuleName.'/route'],
+            [33, '权限列表', 3, '/'.$mdmModuleName.'/permission'],
+            [34, '角色列表', 3, '/'.$mdmModuleName.'/role'],
+            [35, '路由列表', 3, '/'.$mdmModuleName.'/route'],
 
             [40, '前台日志', 4, '/'.$moduleName.'/sys-log?sys=frontend'],
             [41, '后台日志', 4, '/'.$moduleName.'/sys-log?sys=backend'],

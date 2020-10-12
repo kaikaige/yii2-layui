@@ -41,7 +41,7 @@ $this->registerCss($css);
             <div class="layui-card-header">
                 <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户登录
             </div>
-            <?php $form = \common\layui\form\ActiveForm::begin([
+            <?php $form = \kaikaige\layui\components\ActiveForm::begin([
                     'model' => $model,
                     'fieldConfig' => [
                     'template' => '<div class="layui-form-item">
@@ -84,7 +84,7 @@ $this->registerCss($css);
 <!--                    <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>-->
 <!--                    <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>-->
 <!--                </div>-->
-            <?php \common\layui\form\ActiveForm::end() ?>
+            <?php \kaikaige\layui\components\ActiveForm::end() ?>
         </div>
     </div>
 
@@ -108,9 +108,9 @@ $this->registerCss($css);
         form.on('submit(login-submit)', function (obj) {
             $.post("", obj.field, function (res) {
                 if(res.code != 200) {
-                    layer.msg(res.message, {icon: 2, time: 500});
+                    layer.msg(res.message, {icon: 2, time: 1000});
                 } else {
-                    layer.msg(res.message, {icon: 1, time: 500}, function () {
+                    layer.msg(res.message, {icon: 1, time: 1500}, function () {
                         location.replace('')
                     });
                 }

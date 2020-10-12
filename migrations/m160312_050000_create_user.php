@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use mdm\admin\components\Configs;
 
 class m160312_050000_create_user extends Migration
 {
@@ -13,8 +12,7 @@ class m160312_050000_create_user extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $userTable = Configs::instance()->userTable;
-        $db = Configs::userDb();
+        $userTable = \kaikaige\layui\components\Configs::instance()->userTable;
 
         // Check if the table exists
         if ($db->schema->getTableSchema($userTable, true) === null) {
