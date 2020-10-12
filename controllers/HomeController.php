@@ -1,6 +1,10 @@
 <?php
 namespace kaikaige\layui\controllers;
+
+use kaikaige\layui\forms\LoginForm;
+use yii;
 use kaikaige\layui\models\AuthMenu;
+use mdm\admin\components\Helper;
 use yii\helpers\Url;
 use yii\web\Controller;
 
@@ -16,11 +20,39 @@ class HomeController extends Controller
     public $layout = "@kaikaige/layui/views/layouts/main";
 
     public function actionIndex() {
-        $menus = AuthMenu::find()->asArray()->all();
+        $menus = AuthMenu::find()->orderBy(['order'=>SORT_ASC])->asArray()->all();
+        $this->view->title = $this->module->title;
+        $menus = $this->treeMenus($menus, 0);
+//        f_d($menus);
         return $this->render('index', [
-            'menus' => $this->treeMenus($menus, 0),
+            'menus' => $menus,
             'defaultUrl' => Url::to($this->module->homeUrl),
         ]);
+    }
+
+    public function actionLogin()
+    {
+        $this->layout = false;
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = new LoginForm();
+        if (Yii::$app->request->isAjax) {
+            if (!$model->load(Yii::$app->request->post()) || !$model->login()) {
+                return $this->asJson(['code'=>400, 'message'=>f_model_error($model)]);
+            } else {
+                return $this->asJson(['code'=>200, 'message'=>'登录成功']);
+            }
+        } else {
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionWelcome() {
+        $this->layout = false;
+        return $this->render('welcome');
     }
 
     private function treeMenus($data, $pId) {
@@ -29,8 +61,10 @@ class HomeController extends Controller
         {
             if($v['parent'] == $pId)
             {        //父亲找到儿子
-                $v['items'] = $this->treeMenus($data, $v['id']);
-                $tree[] = $v;
+                if (Helper::checkRoute($v['route'], \Yii::$app->getRequest()->get())) {
+                    $v['items'] = $this->treeMenus($data, $v['id']);
+                    $tree[] = $v;
+                }
                 //unset($data[$k]);
             }
         }
@@ -39,5 +73,11 @@ class HomeController extends Controller
 
     public function actionTheme() {
         return $this->render('theme');
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+        return $this->goHome();
     }
 }

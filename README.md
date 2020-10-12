@@ -18,5 +18,6 @@ to the require section of your `composer.json` file.
 
 Usage
 -----
+```php
 
-Once the extension is installed, simply use it in your code by  :
+```

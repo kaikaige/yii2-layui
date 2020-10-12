@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
             cols: [
                 {field:'name', align: 'center', title:'名称', edit:'text'},
                 {field:'route', align: 'center', title:'路由',  edit:'text', width:200},
-                {field:'order', align: 'center', title:'序号', edit:'text', width:60},
+                {field:'order', align: 'center', title:'权重', edit:'text', width:60},
                 {field:'data', align: 'center', title:'Data', edit:'text'},
                 {field:'icon', align: 'center', title:'图标', edit:'text'},
                 {fixed: 'right',align: 'center', toolbar: '#auth-menu-table-bar', title: '操作', width: 170}

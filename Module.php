@@ -21,5 +21,7 @@ class Module extends \yii\base\Module
      */
     public $controllerNamespace = 'kaikaige\layui\controllers';
 
-    public $homeUrl = [];
+    public $homeUrl = ['home/welcome'];
+
+    public $title = '未设置title';
 }

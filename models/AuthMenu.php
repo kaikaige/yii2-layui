@@ -2,6 +2,7 @@
 
 namespace kaikaige\layui\models;
 
+use kaikaige\layui\components\Configs;
 use Yii;
 use yii\helpers\Json;
 
@@ -23,7 +24,7 @@ class AuthMenu extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'auth_menu';
+        return Configs::instance()->menuTable;
     }
 
     /**
@@ -50,7 +51,7 @@ class AuthMenu extends \yii\db\ActiveRecord
             'name' => '名称',
             'parent' => '父级',
             'route' => '路由',
-            'order' => '序号',
+            'order' => '权重',
             'data' => 'Data',
             'icon' => '图标',
         ];
@@ -63,7 +64,7 @@ class AuthMenu extends \yii\db\ActiveRecord
     }
 
     public static function dropDwonList() {
-        $models = AuthMenu::find()->all();
+        $models = AuthMenu::find()->orderBy(['order'=>SORT_ASC])->all();
         $data = [];
         /* @var $model AuthMenu*/
         foreach ($models as $model) {

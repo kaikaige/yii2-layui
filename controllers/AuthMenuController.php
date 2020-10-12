@@ -60,7 +60,7 @@ class AuthMenuController extends Controller
     {
         $model = new $this->modelClass;
         if (Yii::$app->request->isAjax) {
-            $data = AuthMenu::find()->where(['parent'=>0])->all();
+            $data = AuthMenu::find()->where(['parent'=>0])->orderBy(['order'=>SORT_ASC])->all();
             return [
                 'code' => 0,
                 'message' => '',
@@ -73,7 +73,7 @@ class AuthMenuController extends Controller
     }
 
     public function actionList($parent=0) {
-        $models = AuthMenu::findAll(['parent'=>$parent]);
+        $models = AuthMenu::find()->where(['parent'=>$parent])->orderBy(['order'=>SORT_ASC])->all();
         $data = [];
         foreach ($models as $model) {
             $data[] = [
