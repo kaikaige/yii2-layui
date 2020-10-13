@@ -3,6 +3,7 @@
 namespace kaikaige\layui\components;
 
 use Yii;
+use yii\base\BaseObject;
 use yii\caching\Cache;
 use yii\db\Connection;
 use yii\di\Instance;
@@ -15,15 +16,17 @@ use yii\rbac\ManagerInterface;
  * @package kaikaige\layui\components
  * @property string $moduleName
  */
-class Configs extends \mdm\admin\BaseObject
+class Configs extends BaseObject
 {
-    public $moduleName = 'layui';
+    public $moduleName = 'ms';
 
     public $menuTable = 'auth_menu';
 
-    public $mdmModuleName = 'admin';
+    public $mdmModuleName = 'mdm';
 
-    public $userTable = 'admin';
+    public $userTable = '{{%user}}';
+
+    public $title = 'XXX管理系统';
 
     private static $_instance;
 

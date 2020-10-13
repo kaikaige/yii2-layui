@@ -22,7 +22,7 @@ class SysLog extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        $sys = f_get('sys', 'backend');
+        $sys = Yii::$app->request->get('sys', 'backend');
         return 'log_'.$sys;
     }
 

@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
         // 渲染表格
         tableX.render({
             elem: '#sys-log-table',
-            url: '<?=Url::to(["index", "sys"=>f_get('sys')])?>',
+            url: '<?=Url::to(["index", "sys"=>Yii::$app->request->get('sys')])?>',
             toolbar: '#sys-log-table-tool-bar',
             method:'get',
             limit:20,
@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 layer.confirm('请确认清空日志', function(index){
                     layer.close(index);
                     //向服务端发送删除指令
-                    var url = "<?= Url::to(['clear', 'sys'=>f_get('sys')])?>";
+                    var url = "<?= Url::to(['clear', 'sys'=>Yii::$app->request->get('sys')])?>";
                     $.post(url,{'_csrf-backend':_csrf},function (data) {
                         layer.msg("清除成功！");})
                     table.reload('sys-log-table');

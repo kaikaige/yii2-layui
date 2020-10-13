@@ -15,7 +15,7 @@ class m160312_050000_create_user extends Migration
         $userTable = \kaikaige\layui\components\Configs::instance()->userTable;
 
         // Check if the table exists
-        if ($db->schema->getTableSchema($userTable, true) === null) {
+        if ($this->db->schema->getTableSchema($userTable, true) === null) {
             $this->createTable($userTable, [
                 'id' => $this->primaryKey(),
                 'username' => $this->string(32)->notNull(),
@@ -24,10 +24,21 @@ class m160312_050000_create_user extends Migration
                 'password_reset_token' => $this->string(),
                 'email' => $this->string()->notNull(),
                 'status' => $this->smallInteger()->notNull()->defaultValue(10),
-                'created_at' => $this->integer()->notNull(),
-                'updated_at' => $this->integer()->notNull(),
+                'created_at' => $this->dateTime()->notNull(),
+                'updated_at' => $this->dateTime()->notNull(),
                 ], $tableOptions);
         }
+        $this->insert($userTable, [
+            'id' => 1,
+            'username' => 'admin',
+            'auth_key' => '',
+            'password_hash' => Yii::$app->security->generatePasswordHash('admin'),
+            'password_reset_token' => '',
+            'email' => 'test@admin.com',
+            'status' => 10,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
     }
 
     public function down()

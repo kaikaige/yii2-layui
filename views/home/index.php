@@ -7,7 +7,7 @@ $baseUrl = $asset->baseUrl;
     <div class="layui-header">
         <div class="layui-logo">
             <img src="<?= $baseUrl ?>/images/logo.png"/>
-            <cite>&nbsp;EasyWeb Iframe</cite>
+            <cite><?= \kaikaige\layui\components\Configs::instance()->title ?></cite>
         </div>
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item" lay-unselect>
@@ -32,15 +32,15 @@ $baseUrl = $asset->baseUrl;
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item" lay-unselect>
-                <a ew-event="message" title="消息">
-                    <i class="layui-icon layui-icon-notice"></i>
-                    <span class="layui-badge-dot"></span><!--小红点-->
-                </a>
-            </li>
-            <li class="layui-nav-item" lay-unselect>
-                <a ew-event="note" title="便签"><i class="layui-icon layui-icon-note"></i></a>
-            </li>
+<!--            <li class="layui-nav-item" lay-unselect>-->
+<!--                <a ew-event="message" title="消息">-->
+<!--                    <i class="layui-icon layui-icon-notice"></i>-->
+<!--                    <span class="layui-badge-dot"></span><!--小红点-->-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li class="layui-nav-item" lay-unselect>-->
+<!--                <a ew-event="note" title="便签"><i class="layui-icon layui-icon-note"></i></a>-->
+<!--            </li>-->
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
                 <a ew-event="fullScreen" title="全屏"><i class="layui-icon layui-icon-screen-full"></i></a>
             </li>
@@ -54,7 +54,7 @@ $baseUrl = $asset->baseUrl;
                         <a ew-href="page/template/user-info.html">个人中心</a>
                     </dd>
                     <dd lay-unselect>
-                        <a ew-event="psw">修改密码</a>
+                        <a ew-event="upPswd">修改密码</a>
                     </dd>
                     <hr>
                     <dd lay-unselect>
@@ -78,7 +78,7 @@ $baseUrl = $asset->baseUrl;
                     echo ' layui-hide';
                 } ?>" nav-id="xt<?= $key ?>" lay-filter="admin-side-nav" style="margin: 15px 0;">
                     <?php
-                        foreach ($sys['items'] as $menu) {
+                    foreach ($sys['items'] as $menu) {
                         if (empty($menu['items']) && $menu['route'] == '') continue;
                         ?>
                         <li class="layui-nav-item">
@@ -106,8 +106,9 @@ $baseUrl = $asset->baseUrl;
 </div>
 <!-- 加载动画 -->
 <?php
+$upPswd = \yii\helpers\Url::to(['home/up-pswd']);
 $js = <<<EOD
-layui.use(['index'], function () {
+layui.use(['index', 'admin'], function () {
         var $ = layui.jquery;
         var index = layui.index;
         // 默认加载主页
@@ -116,7 +117,12 @@ layui.use(['index'], function () {
             menuName: '<i class="layui-icon layui-icon-home"></i>',
             loadSetting: false
         });
-
+        layui.admin.events.upPswd = function(){
+           layui.admin.open({
+           id:"pswForm",type:2,title:"修改密码",area:["360px","287px"],shade:0,
+           content:"{$upPswd}"
+           })
+        }
     });
 EOD;
 $this->registerJs($js, \yii\web\View::POS_END);

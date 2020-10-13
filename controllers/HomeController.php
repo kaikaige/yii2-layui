@@ -2,11 +2,11 @@
 namespace kaikaige\layui\controllers;
 
 use kaikaige\layui\forms\LoginForm;
+use kaikaige\layui\forms\UpPasswordForm;
 use yii;
 use kaikaige\layui\models\AuthMenu;
 use mdm\admin\components\Helper;
 use yii\helpers\Url;
-use yii\web\Controller;
 
 /**
  * Created by PhpStorm.
@@ -15,7 +15,7 @@ use yii\web\Controller;
  * Time: 15:03
  */
 
-class HomeController extends Controller
+class HomeController extends \kaikaige\layui\base\Controller
 {
     public $layout = "@kaikaige/layui/views/layouts/main";
 
@@ -73,6 +73,20 @@ class HomeController extends Controller
 
     public function actionTheme() {
         return $this->render('theme');
+    }
+
+    public function actionUpPswd()
+    {
+//        return Yii::$app->security->generatePasswordHash("admin");
+        $model = new UpPasswordForm();
+        if (Yii::$app->request->isAjax) {
+            $model->load(Yii::$app->request->post(), '');
+            $model->update();
+            return $model;
+        } else {
+            return $this->render('up-pswd');
+        }
+
     }
 
     public function actionLogout()
