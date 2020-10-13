@@ -43,7 +43,7 @@ class Generator extends CrudGenerator
     public $baseControllerClass = \kaikaige\layui\base\Controller::class;
 
     const TYPE_TEXT = 1;
-//    const TYPE_UEDITOR = 2;
+    const TYPE_EDITOR = 2;
     const TYPE_DATE = 3;
     const TYPE_SELECT = 4;
     const TYPE_SELECT2 = 5;
@@ -54,7 +54,7 @@ class Generator extends CrudGenerator
     public function fieldTypes() {
         return [
             self::TYPE_TEXT => 'text',
-//            self::TYPE_UEDITOR => 'ueditor',
+            self::TYPE_EDITOR => 'editor',
             self::TYPE_IMAGE => 'image',
             self::TYPE_FILE => 'file',
             self::TYPE_DATE => 'date',
@@ -247,7 +247,7 @@ class Generator extends CrudGenerator
             case self::TYPE_TEXT:
                 return "{field:'".$attribute."', align: 'center', title:'".$modelClass->getAttributeLabel($attribute)."', sort: true, edit:'text'},";
             case self::TYPE_IMAGE:
-                return "{field:'$attribute', align: 'center', title:'".$modelClass->getAttributeLabel($attribute)."', templet: function(d){return '<img class=\"table-img\" src=\"<?= Yii::\$app->params['imgUrl'] ?>'+d.cover+'\">'}},";
+                return "{field:'$attribute', align: 'center', title:'".$modelClass->getAttributeLabel($attribute)."', templet: function(d){return '<img class=\"table-img\" src=\"<?= Yii::\$app->params['imgUrl'] ?>'+d.$attribute+'\">'}},";
             default:
                 return "{field:'".$attribute."', align: 'center', title:'".$modelClass->getAttributeLabel($attribute)."', sort: true},";
         }
@@ -305,9 +305,11 @@ class Generator extends CrudGenerator
             case self::TYPE_DATE:
                 return "\$form->field(\$model, '$attribute')->textInput(['placeholder'=>'yyyy-MM-dd', 'class'=>'layui-input date-icon'])";
             case self::TYPE_IMAGE:
-                return "\common\widgets\ImageUpload::widget([\n\t\t'model' => \$model,\n\t\t'attribute' => '$attribute',\n\t\t'options'=>[]\n\t])";
+                return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\layui\components\widgets\ImageUpload::class)';
             case self::TYPE_FILE:
-                return "\common\widgets\FileUpload::widget([\n\t\t'model' => \$model,\n\t\t'attribute' => '$attribute',\n\t\t'options'=>[]\n\t])";
+                return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\layui\components\widgets\FileUpload::class)';
+            case self::TYPE_EDITOR:
+                return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\tinymce\TinyMce::class, [])';
             default:
                 return parent::generateActiveField($attribute);
 
@@ -438,7 +440,7 @@ class Generator extends CrudGenerator
     }
 
     public function generateSearchField() {
-        $fields = "";
+        $fields = "\n";
         $model = new $this->modelClass;
         if ($this->searchFields) {
             $searchFields = array_chunk($this->searchFields, 4);

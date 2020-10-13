@@ -35,20 +35,21 @@ class m140602_111327_create_menu_table extends \yii\db\Migration
         $mdmModuleName = Configs::instance()->mdmModuleName;
 
         $this->batchInsert($menuTable, ['id', 'name', 'parent', 'route'], [
-            [1, '系统管理', 0, null],
-            [2, '业务模块', 0, null],
-            [3, '权限管理', 1, null],
-            [4, '系统日志', 1, null],
+            [1, '业务模块', 0, null],
+            [9, '系统管理', 0, null],
+            
+            [30, '权限管理', 9, null],
+            [40, '系统日志', 9, null],
 
-            [30, '模块管理', 3, '/'.$moduleName.'/auth-menu/system'],
-            [31, '菜单管理', 3, '/'.$moduleName.'/auth-menu'],
-            [32, '用户授权', 3, '/'.$mdmModuleName.'/assignment'],
-            [33, '权限列表', 3, '/'.$mdmModuleName.'/permission'],
-            [34, '角色列表', 3, '/'.$mdmModuleName.'/role'],
-            [35, '路由列表', 3, '/'.$mdmModuleName.'/route'],
+            [31, '模块管理', 30, '/'.$moduleName.'/auth-menu/system'],
+            [32, '菜单管理', 30, '/'.$moduleName.'/auth-menu'],
+            [33, '用户授权', 30, '/'.$mdmModuleName.'/assignment'],
+            [34, '权限列表', 30, '/'.$mdmModuleName.'/permission'],
+            [35, '角色列表', 30, '/'.$mdmModuleName.'/role'],
+            [36, '路由列表', 30, '/'.$mdmModuleName.'/route'],
 
-            [40, '前台日志', 4, '/'.$moduleName.'/sys-log?sys=frontend'],
-            [41, '后台日志', 4, '/'.$moduleName.'/sys-log?sys=backend'],
+            [41, '前台日志', 40, '/'.$moduleName.'/sys-log?sys=frontend'],
+            [42, '后台日志', 40, '/'.$moduleName.'/sys-log?sys=backend'],
         ]);
     }
 

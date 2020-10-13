@@ -20,7 +20,7 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kaikaige\layui\components\SearchActiveForm;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
 <?= "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n"?>
@@ -30,33 +30,14 @@ $this->title = <?= $generator->generateString($generator->title.'列表') ?>;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
-    <!-- 关闭Tab时顶部标题 -->
-    <div class="layui-body-header">
-        <span class="layui-body-header-title"><?="<?="?> Html::encode($this->title) ?></span>
-        <span class="layui-breadcrumb pull-right">
-            <a href="<?="<?="?> Url::to("/index") ?>">首页</a>
-            <a><cite><?="<?="?> Html::encode($this->title) ?></cite></a>
-        </span>
-    </div>
-
-    <!-- 正文开始 -->
     <div class="layui-fluid">
         <div class="layui-card">
             <div class="layui-card-body">
                 <div class="layui-form toolbar">
                     <div class="layui-form-item">
-    <?= "<?php " ?> $form = ActiveForm::begin([
-        'options'=>['style'=>'display:inline;', 'class'=>'layui-form search-form', 'lay-filter'=>'searchForm'],
-        'fieldConfig'=>[
-            'template' => '<div class="layui-inline">{label}<div class="layui-input-inline">{input}</div></div>',
-            'labelOptions' => ['class' => 'layui-form-label'],
-            'inputOptions' => ['class'=>'layui-input'],
-            'options'=>['tag'=>false]
-        ]
-    ])?>
-
-    <?= $generator->generateSearchField();?>
-    <?= "<?php " ?> ActiveForm::end(); ?>
+                    <?= "<?php " ?>$form = SearchActiveForm::begin([])?>
+<?= $generator->generateSearchField();?>
+                    <?= "<?php " ?>SearchActiveForm::end(); ?>
                     </div>
                 </div>
                 <table class="layui-table" id="<?= $tableId ?>" lay-filter="<?= $tableId ?>"></table>
@@ -107,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
             cols: [[
                 {type: 'checkbox', fixed: 'left'},
 <?php foreach ($listFields as $attribute) {echo "\t\t\t\t".$generator->generateListField($attribute)."\n";}?>
-                {fixed: 'right',align: 'center', toolbar: '#kx-goods-table-bar', title: '操作', minWidth: 170}
+                {fixed: 'right',align: 'center', toolbar: '#<?= $tableName ?>-table-bar', title: '操作', minWidth: 170}
             ]]
         });
 
