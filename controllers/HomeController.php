@@ -1,12 +1,15 @@
 <?php
 namespace kaikaige\layui\controllers;
 
+use kaikaige\layui\actions\UploadAction;
 use kaikaige\layui\forms\LoginForm;
 use kaikaige\layui\forms\UpPasswordForm;
 use yii;
 use kaikaige\layui\models\AuthMenu;
 use mdm\admin\components\Helper;
 use yii\helpers\Url;
+use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 
 /**
  * Created by PhpStorm.
@@ -18,7 +21,7 @@ use yii\helpers\Url;
 class HomeController extends \kaikaige\layui\base\Controller
 {
     public $layout = "@kaikaige/layui/views/layouts/main";
-
+    
     public function actionIndex() {
         $menus = AuthMenu::find()->orderBy(['order'=>SORT_ASC])->asArray()->all();
         $this->view->title = $this->module->title;
@@ -93,6 +96,28 @@ class HomeController extends \kaikaige\layui\base\Controller
     {
         Yii::$app->user->logout();
         return $this->goHome();
+    }
+
+    public function actionUpload()
+    {
+        $this->enableCsrfValidation = false;
+        $file = UploadedFile::getInstanceByName('file');
+        $baseDirl = 'upload/'.date('Y/m/d');
+        FileHelper::createDirectory(Yii::getAlias("@webroot").'/'.$baseDirl);
+
+        $filename = $baseDirl.sha1_file($file->tempName).'.'.$file->extension;
+        if ($file->saveAs(Yii::getAlias("@webroot").'/'.$filename)) {
+            return [
+                'code' => 200,
+                'location' => $filename,
+                'msg' => '上传成功'
+            ];
+        } else {
+            return [
+                'code' => 400,
+                'msg' => '图片上传错误，错误代码['.$file->error.']'
+            ];
+        }
     }
 
     private function modelError($model) {

@@ -1,12 +1,14 @@
 <?php
 namespace kaikaige\layui\components\widgets;
 
+use kaikaige\layui\components\Configs;
 use Yii;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 /**
  * <?= \kaikaige\layui\components\widgets\ImageUpload::widget([
@@ -29,11 +31,11 @@ class FileUpload extends Widget
 
     public $attribute;
 
-    public $action = '/site/upload';
+    public $action;
 
     public $notice = '';
 
-    public $preUrl = '/';
+    public $preUrl;
 
     public $options = [];
 
@@ -53,6 +55,8 @@ class FileUpload extends Widget
                 $this->notice .=  '不允许大于'.$this->options['size'].'KB';
             }
         }
+        $this->action = $this->action ?? Configs::instance()->uploadAction;
+        $this->preUrl = $this->preUrl ?? Configs::instance()->preUrl;
         $this->registerJs();
     }
 

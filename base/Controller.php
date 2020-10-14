@@ -28,6 +28,8 @@ class Controller extends \yii\web\Controller
     public $serializer = 'yii\rest\Serializer';
 
     public $layout = "@kaikaige/layui/views/layouts/main";
+
+    public $enableCsrfValidation = false;
     
     /**
      * Lists all GoodsType models.

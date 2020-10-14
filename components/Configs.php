@@ -28,6 +28,10 @@ class Configs extends BaseObject
 
     public $title = 'XXX管理系统';
 
+    public $uploadAction = '/ms/home/upload';
+
+    public $preUrl = '/';
+
     private static $_instance;
 
     /**

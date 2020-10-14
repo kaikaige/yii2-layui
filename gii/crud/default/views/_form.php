@@ -17,11 +17,11 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kaikaige\layui\components\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form kaikaige\layui\components\ActiveForm */
 ?>
 <style>
     html{
@@ -31,18 +31,10 @@ use yii\widgets\ActiveForm;
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
 
     <?= "<?php " ?>$form = ActiveForm::begin([
-        'enableClientValidation' => false,
         'options'=>[
-            'class'=>'layui-form model-form',
             'lay-filter'=>'user-admin-filter',
             'id'=>'<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form'
         ],
-        'fieldConfig'=>[
-            'template' => '<div class="layui-form-item">{label}<div class="layui-input-block">{input}</div></div>',
-            'labelOptions' => ['class' => 'layui-form-label'],
-            'inputOptions' => ['class'=>'layui-input'],
-            'options'=>['tag'=>false]
-        ]
     ]); ?>
 
 <?php

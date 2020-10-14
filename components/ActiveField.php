@@ -106,16 +106,20 @@ class ActiveField extends \yii\widgets\ActiveField
             $html .= ">$item</option>";
         }
         $html .= '<select>';
+        $width = $options['width'] ?? '150';
+        $html = Html::tag('div', $html, ['style'=>'width:'.$width.'px']);
         $this->parts['{input}'] = $html;
         return $this;
     }
 
     public function dateInput($options = []) {
-        $options = [
+        $options = ArrayHelper::merge([
             'class' => 'layui-input date-icon',
             'readonly' => 'readonly',
             'lay-verType' => 'tips',
-        ];
+            'placeholder'=>'yyyy-MM-dd',
+            'style' => 'width:150px',
+        ], $options);
         return parent::textInput($options, false);
     }
 

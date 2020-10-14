@@ -303,7 +303,7 @@ class Generator extends CrudGenerator
             case self::TYPE_SELECT2:
                 return "\$form->field(\$model, '$attribute')->dropDownList([''=>'请选择'] + [], ['lay-search'=>'lay-search'])";
             case self::TYPE_DATE:
-                return "\$form->field(\$model, '$attribute')->textInput(['placeholder'=>'yyyy-MM-dd', 'class'=>'layui-input date-icon'])";
+                return "\$form->field(\$model, '$attribute')->dateInput()";
             case self::TYPE_IMAGE:
                 return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\layui\components\widgets\ImageUpload::class)';
             case self::TYPE_FILE:
