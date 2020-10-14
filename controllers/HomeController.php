@@ -107,17 +107,18 @@ class HomeController extends \kaikaige\layui\base\Controller
 
         $filename = $baseDirl.sha1_file($file->tempName).'.'.$file->extension;
         if ($file->saveAs(Yii::getAlias("@webroot").'/'.$filename)) {
-            return [
+            $data = [
                 'code' => 200,
                 'location' => $filename,
                 'msg' => '上传成功'
             ];
         } else {
-            return [
+            $data = [
                 'code' => 400,
                 'msg' => '图片上传错误，错误代码['.$file->error.']'
             ];
         }
+        return Yii::$app->request->isAjax ? $data : $this->asJson($data);
     }
 
     private function modelError($model) {

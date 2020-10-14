@@ -247,7 +247,7 @@ class Generator extends CrudGenerator
             case self::TYPE_TEXT:
                 return "{field:'".$attribute."', align: 'center', title:'".$modelClass->getAttributeLabel($attribute)."', sort: true, edit:'text'},";
             case self::TYPE_IMAGE:
-                return "{field:'$attribute', align: 'center', title:'".$modelClass->getAttributeLabel($attribute)."', templet: function(d){return '<img class=\"table-img\" src=\"<?= Yii::\$app->params['imgUrl'] ?>'+d.$attribute+'\">'}},";
+                return "{field:'$attribute', align: 'center', title:'".$modelClass->getAttributeLabel($attribute)."', templet: function(d){return '<img class=\"table-img\" width=100% height=100% src=\"<?= Yii::\$app->params['imgUrl'] ?>'+d.$attribute+'\">'}},";
             default:
                 return "{field:'".$attribute."', align: 'center', title:'".$modelClass->getAttributeLabel($attribute)."', sort: true},";
         }
@@ -309,7 +309,10 @@ class Generator extends CrudGenerator
             case self::TYPE_FILE:
                 return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\layui\components\widgets\FileUpload::class)';
             case self::TYPE_EDITOR:
-                return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\tinymce\TinyMce::class, [])';
+                return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\tinymce\TinyMce::class, [
+        \'uploadAction\' => \kaikaige\layui\components\Configs::instance()->uploadAction,
+        \'preUrl\' => \kaikaige\layui\components\Configs::instance()->preUrl,
+    ])';
             default:
                 return parent::generateActiveField($attribute);
 

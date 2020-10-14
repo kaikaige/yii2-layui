@@ -25,8 +25,11 @@ class m140506_102106_demoi_init extends \yii\db\Migration
         }
         $this->createTable('demo', [
             'id' => $this->primaryKey(),
-            'status' => $this->integer(),
+            'status' => $this->boolean(),
             'title' => $this->string(),
+            'type_id' => $this->integer(),
+            'imgurl' => $this->string(255),
+            'fileurl' => $this->string(255),
             'content' => $this->text(),
             'create_time' => $this->dateTime(),
         ], $tableOptions);

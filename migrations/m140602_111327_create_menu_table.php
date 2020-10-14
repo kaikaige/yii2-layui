@@ -36,18 +36,17 @@ class m140602_111327_create_menu_table extends \yii\db\Migration
 
         $this->batchInsert($menuTable, ['id', 'name', 'parent', 'route'], [
             [1, '业务模块', 0, null],
+            [10, 'Demo', 1, '/demo'],
             [9, '系统管理', 0, null],
-            
             [30, '权限管理', 9, null],
             [40, '系统日志', 9, null],
-
+            [50, 'gii代码生成', 9, '/gii'],
             [31, '模块管理', 30, '/'.$moduleName.'/auth-menu/system'],
             [32, '菜单管理', 30, '/'.$moduleName.'/auth-menu'],
             [33, '用户授权', 30, '/'.$mdmModuleName.'/assignment'],
             [34, '权限列表', 30, '/'.$mdmModuleName.'/permission'],
             [35, '角色列表', 30, '/'.$mdmModuleName.'/role'],
             [36, '路由列表', 30, '/'.$mdmModuleName.'/route'],
-
             [41, '前台日志', 40, '/'.$moduleName.'/sys-log?sys=frontend'],
             [42, '后台日志', 40, '/'.$moduleName.'/sys-log?sys=backend'],
         ]);
