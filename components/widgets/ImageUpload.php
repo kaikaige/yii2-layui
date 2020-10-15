@@ -55,8 +55,8 @@ class ImageUpload extends Widget
                 $this->notice .=  '不允许大于'.$this->options['size'].'KB';
             }
         }
-        $this->action = $this->action ?? Configs::instance()->uploadAction;
-        $this->preUrl = $this->preUrl ?? Configs::instance()->preUrl;
+        $this->action = $this->action ?? Configs::instance()->uploadConfig['action'];
+        $this->preUrl = $this->preUrl ?? Configs::instance()->uploadConfig['domain'];
         $this->registerJs();
     }
 

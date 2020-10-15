@@ -20,14 +20,14 @@ Usage
 -----
 > 项目初始化化、数据库配置、url美化查看官方文档即可 
 
-##配置步骤如下
-
-Step 1 编辑配置文件`backend/config/main.php`
-> 增加两个模块 `ms` and `mdm`，最好不要修改模块名，如需请参考配置篇
+#### Step 1 编辑配置文件
+> `backend/config/main.php` 增加两个模块 `ms` and `mdm`，最好不要修改模块名，如需请参考配置篇
 * ms 模块后台管理界面入口
 * mdm 第三方rbac权限管理插件，依赖会同步安装
 ```
 ...
+'language' => 'zh-CN',
+'defaultRoute' => '/ms',
 'modules' => [
     'ms' => [
         'class' => \kaikaige\layui\Module::class,
@@ -82,11 +82,34 @@ Step 1 编辑配置文件`backend/config/main.php`
 ],
 ```
 
-Step 2 使用migrate工具初始化数据库，会生成对应的数据表
+#### Step 2 初始化数据库
+> 使用migrate工具初始化数据库，会生成对应的数据表
+```
+./yii migrate --migrationPath=@kaikaige/layui/migrations
+```
 * auth_* 是rabc授权系统用到的数据表
 * auth_menu 菜单表，会初始化一些系统管理菜单
 * log_* 是系统日志表，对应main.php log组件自定义配置
 * user 管理员用户表，这个表会单独说明
+
+#### Step 3 gii配置
+> 编辑配置文件 `config/main-local.php`
 ```
-./yii migrate --migrationPath=@kaikaige/layui/migrations
+$config['modules']['gii'] = [
+    'class' => 'yii\gii\Module',
+    'generators'=> [
+        'crud'=> [
+            'class' => \kaikaige\layui\gii\crud\Generator::class,
+            'templates'=> [
+                'backend'=>'@kaikaige/layui/gii/crud/default'
+            ],
+        ],
+        'model' => [
+            'class' => \kaikaige\layui\gii\model\Generator::class,
+            'templates'=> [
+                'backend'=>'@kaikaige/layui/gii/model/default'
+            ],
+        ]
+    ]
+];
 ```

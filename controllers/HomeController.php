@@ -2,6 +2,7 @@
 namespace kaikaige\layui\controllers;
 
 use kaikaige\layui\actions\UploadAction;
+use kaikaige\layui\components\Configs;
 use kaikaige\layui\forms\LoginForm;
 use kaikaige\layui\forms\UpPasswordForm;
 use yii;
@@ -101,7 +102,8 @@ class HomeController extends \kaikaige\layui\base\Controller
     public function actionUpload()
     {
         $this->enableCsrfValidation = false;
-        $file = UploadedFile::getInstanceByName('file');
+        $inputName = Configs::instance()->uploadConfig['inputName'];
+        $file = UploadedFile::getInstanceByName($inputName);
         $baseDirl = 'upload/'.date('Y/m/d');
         FileHelper::createDirectory(Yii::getAlias("@webroot").'/'.$baseDirl);
 

@@ -290,12 +290,10 @@ class Generator extends CrudGenerator
     {
         $tableSchema = $this->getTableSchema();
         $type = !empty($this->inputType) ? $this->inputType[$attribute] : -1;
-
+//        f_d($this->inputType);
         switch ($type) {
             case self::TYPE_TEXT:
                 return parent::generateActiveField($attribute);
-//            case self::TYPE_UEDITOR:
-//                return "\$this->render('/common/_ueditor', ['model'=>\$model, 'attribute'=>'{$attribute}'])";
             case self::TYPE_SELECT:
                 return "\$form->field(\$model, '$attribute')->dropDownList([''=>'请选择'] + [])";
             case self::TYPE_BOOLEAN:
@@ -310,8 +308,8 @@ class Generator extends CrudGenerator
                 return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\layui\components\widgets\FileUpload::class)';
             case self::TYPE_EDITOR:
                 return '$form->field($model, \''.$attribute.'\')->widget(\kaikaige\tinymce\TinyMce::class, [
-        \'uploadAction\' => \kaikaige\layui\components\Configs::instance()->uploadAction,
-        \'preUrl\' => \kaikaige\layui\components\Configs::instance()->preUrl,
+        \'uploadAction\' => \kaikaige\layui\components\Configs::instance()->uploadConfig[\'action\'],
+        \'preUrl\' => \kaikaige\layui\components\Configs::instance()->uploadConfig[\'domain\'],
     ])';
             default:
                 return parent::generateActiveField($attribute);
