@@ -40,7 +40,7 @@ class HomeController extends \kaikaige\layui\base\Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $model = new LoginForm();
+        $model = Yii::createObject(Configs::instance()->loginConfig['form']);
         if (Yii::$app->request->isAjax) {
             if (!$model->load(Yii::$app->request->post()) || !$model->login()) {
                 return $this->asJson(['code'=>400, 'message'=>$this->modelError($model)]);
@@ -104,21 +104,18 @@ class HomeController extends \kaikaige\layui\base\Controller
         $this->enableCsrfValidation = false;
         $inputName = Configs::instance()->uploadConfig['inputName'];
         $file = UploadedFile::getInstanceByName($inputName);
-        $baseDirl = 'upload/'.date('Y/m/d');
-        FileHelper::createDirectory(Yii::getAlias("@webroot").'/'.$baseDirl);
+        $baseDir = Configs::instance()->uploadConfig['dir'].'/'.date('Y/m/d/');
+        $filename = $baseDir.sha1_file($file->tempName).'.'.$file->extension;
+        $data = ['code' => 200, 'location' => $filename, 'msg' => '上传成功'];
 
-        $filename = $baseDirl.sha1_file($file->tempName).'.'.$file->extension;
-        if ($file->saveAs(Yii::getAlias("@webroot").'/'.$filename)) {
-            $data = [
-                'code' => 200,
-                'location' => $filename,
-                'msg' => '上传成功'
-            ];
+        if (($oss = Configs::instance()->uploadConfig['oss']) !== false) {
+            $oss = Yii::$app->get($oss);
+            $oss->putObject($filename, file_get_contents($file->tempName));
         } else {
-            $data = [
-                'code' => 400,
-                'msg' => '图片上传错误，错误代码['.$file->error.']'
-            ];
+            FileHelper::createDirectory(Yii::getAlias("@webroot").'/'.$baseDir);
+            if (!$file->saveAs(Yii::getAlias("@webroot").'/'.$filename)) {
+                $data = ['code' => 400, 'msg' => '图片上传错误，错误代码['.$file->error.']'];
+            }
         }
         return Yii::$app->request->isAjax ? $data : $this->asJson($data);
     }

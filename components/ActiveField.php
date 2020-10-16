@@ -32,6 +32,7 @@ class ActiveField extends \yii\widgets\ActiveField
 
     public function textInput($options = [])
     {
+        $options['style'] = $options['style'] ?? ['width'=>'200px'];
         $options = array_merge($this->inputOptions, $options);
         return parent::textInput($options);
     }
@@ -106,7 +107,7 @@ class ActiveField extends \yii\widgets\ActiveField
             $html .= ">$item</option>";
         }
         $html .= '<select>';
-        $width = $options['width'] ?? '150';
+        $width = $options['width'] ?? '200';
         $html = Html::tag('div', $html, ['style'=>'width:'.$width.'px']);
         $this->parts['{input}'] = $html;
         return $this;

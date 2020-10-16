@@ -42,7 +42,6 @@ $this->registerCss($css);
                 <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户登录
             </div>
             <?php $form = \kaikaige\layui\components\ActiveForm::begin([
-                    'model' => $model,
                     'fieldConfig' => [
                     'template' => '<div class="layui-form-item">
                     {label}
@@ -55,7 +54,7 @@ $this->registerCss($css);
                     'class' => 'layui-card-body layui-form layui-form-pane'
                 ]
             ]) ?>
-                <?= $form->field($model, 'username')->textInput()->label('<i class="layui-icon layui-icon-username"></i>') ?>
+                <?= $form->field($model, 'username')->textInput(['style'=>['width'=>'100%']])->label('<i class="layui-icon layui-icon-username"></i>') ?>
                 <?= $form->field($model, 'password')->passwordInput()->label('<i class="layui-icon layui-icon-password"></i>') ?>
 <!--                <div class="layui-form-item">-->
 <!--                    <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>-->
@@ -106,7 +105,9 @@ $this->registerCss($css);
         var form = layui.form;
 
         form.on('submit(login-submit)', function (obj) {
+            layer.load(0, {shade: false, time: 10*1000});
             $.post("", obj.field, function (res) {
+                layer.closeAll('loading');
                 if(res.code != 200) {
                     layer.msg(res.message, {icon: 2, time: 1000});
                 } else {

@@ -9,15 +9,11 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    const MAX_LOGIN_COUNT = 3;
-
+    public $loginCount;
     public $username;
     public $password;
     public $code;
     public $rememberMe = true;
-
-    public $loginCount;
-
     private $_user;
 
 
@@ -46,14 +42,14 @@ class LoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $c = Yii::$app->session->get('login_count', 0);
-            if ($c > self::MAX_LOGIN_COUNT) {
-                return $this->addError('login_count', '错误太多请稍后尝试登录');
+            $c = Yii::$app->cache->get('layui.admin.login.count');
+            if ($c >= $this->loginCount) {
+                return $this->addError($attribute, '错误太多请稍后尝试登录');
             }
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
                 $c++;
-                Yii::$app->session->set('login_count', $c);
+                Yii::$app->cache->set('layui.admin.login.count', $c, 60 * 1800);
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }

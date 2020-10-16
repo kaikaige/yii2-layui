@@ -2,6 +2,7 @@
 
 namespace kaikaige\layui\components;
 
+use kaikaige\layui\forms\LoginForm;
 use Yii;
 use yii\base\BaseObject;
 use yii\caching\Cache;
@@ -32,7 +33,7 @@ class Configs extends BaseObject
     public $moduleName = 'ms';
 
     /**
-     * @var string 权限至菜单表名
+     * @var string 权限菜单表名
      */
     public $menuTable = '{{%auth_menu}}';
 
@@ -59,6 +60,17 @@ class Configs extends BaseObject
         'domain' => '/', //默认就是根路径，如果上传至OSS或图片服务器则是对应的URL
         'dir' => 'upload', //本地存储，默认上传目录
         'inputName' => 'file', //上传域file input name
+        'oss' => false,
+    ];
+
+    /**
+     * @var array 登录相关配置
+     */
+    public $loginConfig = [
+        'form' => [
+            'class' => LoginForm::class,
+            'loginCount' => 30,
+        ]
     ];
 
     private static $_instance;

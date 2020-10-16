@@ -25,13 +25,13 @@ class m140506_102106_demoi_init extends \yii\db\Migration
         }
         $this->createTable('demo', [
             'id' => $this->primaryKey(),
-            'status' => $this->boolean(),
-            'title' => $this->string(),
-            'type_id' => $this->integer(),
-            'imgurl' => $this->string(255),
-            'fileurl' => $this->string(255),
-            'content' => $this->text(),
-            'create_time' => $this->dateTime(),
+            'status' => $this->boolean()->comment('状态'),
+            'title' => $this->string()->comment('标题'),
+            'type_id' => $this->integer()->comment('类型'),
+            'img_url' => $this->string(255)->comment('封面'),
+            'file_url' => $this->string(255)->comment('文件'),
+            'content' => $this->text()->comment('描述'),
+            'create_time' => $this->dateTime()->comment('创建时间'),
         ], $tableOptions);
     }
 
