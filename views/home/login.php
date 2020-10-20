@@ -1,4 +1,6 @@
 <?php
+use kaikaige\layui\components\Configs;
+
 /** @var $this \yii\web\View */
 $asset = \kaikaige\layui\asset\LayuiAsset::register($this);
 $baseUrl = $asset->baseUrl;
@@ -16,7 +18,7 @@ $this->registerCss($css);
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>登录</title>
+    <title>登录系统</title>
     <link rel="stylesheet" href="<?=$baseUrl?>/css/login.css?v=315">
     <?php $this->registerCsrfMetaTags() ?>
     <!--[if lt IE 9]>
@@ -34,7 +36,7 @@ $this->registerCss($css);
 <?php $this->beginBody() ?>
 <div class="login-wrapper">
     <div class="login-header">
-        <img src="<?=$baseUrl?>/images/logo.png"> MS后台管理系统
+        <img src="<?=$baseUrl?>/images/logo.png"> <?= Configs::instance()->title ?>
     </div>
     <div class="login-body">
         <div class="layui-card">
@@ -56,20 +58,36 @@ $this->registerCss($css);
             ]) ?>
                 <?= $form->field($model, 'username')->textInput(['style'=>['width'=>'100%']])->label('<i class="layui-icon layui-icon-username"></i>') ?>
                 <?= $form->field($model, 'password')->passwordInput()->label('<i class="layui-icon layui-icon-password"></i>') ?>
-<!--                <div class="layui-form-item">-->
-<!--                    <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>-->
-<!--                    <div class="layui-input-block">-->
-<!--                        <div class="layui-row inline-block">-->
-<!--                            <div class="layui-col-xs7">-->
-<!--                                <input name="code" type="text" placeholder="验证码" class="layui-input"-->
-<!--                                       autocomplete="off" lay-verType="tips" lay-verify="required" required/>-->
-<!--                            </div>-->
-<!--                            <div class="layui-col-xs5" style="padding-left: 6px;">-->
-<!--                                <img class="login-captcha" src="https://www.oschina.net/action/user/captcha">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="layui-row">
+                    <div class="layui-col-md8">
+                        &nbsp;
+                    </div>
+                    <div class="layui-col-md4">
+                        <input type="checkbox" name="LoginForm[rememberMe]" title="记住密码" lay-skin="primary" value="1">
+                    </div>
+                </div>
+
+            <?php /*
+<!--                <?//= $form->field($model, 'captcha', ['template'=>'<div class="layui-form-item">
+//                    {input}
+//                </div>'])->widget(\yii\captcha\Captcha::classname(), [
+//                    'captchaAction' => ['home/captcha'],
+//                    'template' => '<div class="layui-form-item">
+//                    <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
+//                    <div class="layui-input-block">
+//                        <div class="layui-row inline-block">
+//                            <div class="layui-col-xs7">
+//                            {input}
+//                            </div>
+//                            <div class="layui-col-xs5" style="padding-left: 6px;">
+//                                {image}
+//                            </div>
+//                        </div>
+//                    </div>
+//                </div>'
+//                ])->label(null) ?>
+ */ ?>
+
 <!--                <div class="layui-form-item">-->
 <!--                    <a href="javascript:;" class="layui-link">帐号注册</a>-->
 <!--                    <a href="javascript:;" class="layui-link pull-right">忘记密码？</a>-->

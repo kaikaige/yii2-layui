@@ -69,7 +69,8 @@ class Configs extends BaseObject
     public $loginConfig = [
         'form' => [
             'class' => LoginForm::class,
-            'loginCount' => 30,
+            'loginCount' => 5, //允许登录失败次数，超过次数冷却30分钟
+            'rememberExpire' => 3600 * 24 * 7, //记住登录状态最大时间默认一周
         ]
     ];
 

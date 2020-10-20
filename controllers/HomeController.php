@@ -22,7 +22,21 @@ use yii\helpers\FileHelper;
 class HomeController extends \kaikaige\layui\base\Controller
 {
     public $layout = "@kaikaige/layui/views/layouts/main";
-    
+
+    public function actions()
+    {
+        return [
+            'captcha' => [
+                'class'=>yii\captcha\CaptchaAction::class,
+                'fixedVerifyCode' => substr(rand(1000,9999), 0),
+                'height' => 50,
+                'width' => 100,
+                'maxLength' => 4,
+                'minLength' => 4,
+            ],
+        ];
+    }
+
     public function actionIndex() {
         $menus = AuthMenu::find()->orderBy(['order'=>SORT_ASC])->asArray()->all();
         $this->view->title = $this->module->title;

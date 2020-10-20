@@ -9,9 +9,12 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $loginCount;
+    public $loginCount; //允许登录失败次数，超过次数冷却30分钟
+    public $rememberExpire; //记住登录状态最大时间默认一周
+
     public $username;
     public $password;
+    public $captcha;
     public $code;
     public $rememberMe = true;
     private $_user;
@@ -29,6 +32,7 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+//            ['captcha', 'captcha'],
         ];
     }
 
@@ -42,14 +46,19 @@ class LoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $c = Yii::$app->cache->get('layui.admin.login.count');
-            if ($c >= $this->loginCount) {
-                return $this->addError($attribute, '错误太多请稍后尝试登录');
+            if ($this->loginCount > 0) {
+                $c = Yii::$app->cache->get('layui.admin.login.count');
+                if ($c >= $this->loginCount) {
+                    return $this->addError($attribute, '错误太多请稍后尝试登录');
+                }
             }
+
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $c++;
-                Yii::$app->cache->set('layui.admin.login.count', $c, 60 * 1800);
+                if ($this->loginCount > 0) {
+                    $c++;
+                    Yii::$app->cache->set('layui.admin.login.count', $c, 60 * 1800);
+                }
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }
@@ -63,7 +72,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? $this->rememberExpire : 0);
         }
 
         return false;

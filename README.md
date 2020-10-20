@@ -14,6 +14,13 @@ composer require kaikaige/yii2-layui:"<version_number>"
 ```
 
 to the require section of your `composer.json` file.
+```
+yii2-layui
+    mdmsoft/yii2-admin #权限管理组件
+    yii2-oss #上传文件至OSS
+    yii2-tinymce #富文本编辑器
+```
+
 
 
 Usage
